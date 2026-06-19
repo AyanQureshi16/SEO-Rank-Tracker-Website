@@ -40,7 +40,7 @@ HTML, CSS, JavaScript, ReactJS, NextJS, ExpressJS, NodeJS
 
 ### 🚀 Portfolio
 
-Check out my work: [ayanqureshi16.github.io/Ayan-Portfolio](https://ayanqureshi16.github.io/Ayan-Portfolio/)
+Check out my work: [ayanqureshi16.github.io/Ayan-Portfolio](https://asq-portfolio-786.vercel.app/)
 
 ---
 
