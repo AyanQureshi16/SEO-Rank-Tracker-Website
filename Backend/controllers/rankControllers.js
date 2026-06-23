@@ -1,5 +1,5 @@
 import KeywordTracking from "../models/keywordTracking";
-
+import {keyworTracking} from "../services/keywordTrackingService.js";
 // Add a keyword to track
 export const addKeywords = async (req, res) => {
   try {
@@ -52,64 +52,42 @@ export const addKeywords = async (req, res) => {
       domain,
       status: "checking",
     });
-
-    return res.status(201).json({
+     res.status(201).json({
       success: true,
       message: "Keyword tracking started",
       tracking,
     });
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: err?.message || "Failed to add keyword",
-    });
+    keywordTracking(tracking)
+  
+  } catch (error) {
+  console.error("Add keyword error:", error.message);
+  if (error.code === 11000) return res.staus(400).json({success:false, message:"Already tracking this keyword" });
+  res.status(500).json({ success: false, message: "server error"});
   }
 };
 
 // Get all tracked keywords for a user
 export const getKeywords = async (req, res) => {
   try {
-    const keywords = await KeywordTracking.find({ userId: req.userId }).sort({
-      createdAt: -1,
-    });
-    return res.status(200).json({ success: true, keywords });
+   const keywords = await keywordTracking.find({userId: req.userId}).sort({createdAt: -1}).select("-rankHistory")
+   res.json({success = true, keywords});
   } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: err?.message || "Failed to fetch keywords",
-    });
+   console.error ("Get Keyword error:",error.message);
+   res.status(500).json({ success: false, message: "server error"});
+
   }
 };
 
 // Get single keyword with full history
 export const getKeyword = async (req, res) => {
   try {
-    const { keyword } = req.params;
-    if (!keyword) {
-      return res.status(400).json({
-        success: false,
-        message: "Keyword param is required",
-      });
-    }
-
-    const item = await KeywordTracking.findOne({
-      userId: req.userId,
-      keyword: keyword.toLowerCase().trim(),
-    });
-
-    if (!item) {
-      return res.status(404).json({
-        success: false,
-        message: "Keyword tracking not found",
-      });
-    }
-
-    return res.status(200).json({ success: true, keywordTracking: item });
+   const keywords = await keywordTracking.findOne({userId: req.params.id, userId: req.userId});
+   if(!tracking) return res.status(404).json({ success : false, message: "Keyword tracking not found"});
+   res.json({success = true, tracking});
   } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: err?.message || "Failed to fetch keyword",
-    });
+   console.error ("Get Keyword error:",error.message);
+   res.status(500).json({ success: false, message: "server error"});
+
   }
 };
 
