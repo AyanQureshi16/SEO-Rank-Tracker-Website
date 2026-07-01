@@ -1,4 +1,4 @@
-import KeywordTracking from "../models/keywordTracking";
+import KeywordTracking from "../models/keywordTracking.js";
 import {keyworTracking} from "../services/keywordTrackingService.js";
 // Add a keyword to track
 export const addKeywords = async (req, res) => {
@@ -71,7 +71,7 @@ export const addKeywords = async (req, res) => {
 export const getKeywords = async (req, res) => {
   try {
    const keywords = await KeywordTracking.find({userId: req.userId}).sort({createdAt: -1}).select("-rankHistory")
-   res.json({success = true, keywords});
+   res.json({success : true, keywords});
   } catch (err) {
    console.error ("Get Keyword error:",error.message);
    res.status(500).json({ success: false, message: "server error"});
@@ -84,7 +84,7 @@ export const getKeyword = async (req, res) => {
   try {
    const keywords = await KeywordTracking.findOne({userId: req.params.id, userId: req.userId});
    if(!tracking) return res.status(404).json({ success : false, message: "Keyword tracking not found"});
-   res.json({success = true, tracking});
+   res.json({success : true, tracking});
   } catch (err) {
    console.error ("Get Keyword error:",error.message);
    res.status(500).json({ success: false, message: "server error"});
