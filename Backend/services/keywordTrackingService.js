@@ -11,7 +11,7 @@ export async function keyworTracking(tracking){
             if(atempt < 2) await new Promise((r)=> setTimeout(r, result.success ? 3000 : 5000))
         }
         if(result.success){
-            const prev = tracking.currentPosition;
+            const prev = tracking.currentPosition;    
             const today = new Date()
             today.setHours(0, 0, 0, 0);
 

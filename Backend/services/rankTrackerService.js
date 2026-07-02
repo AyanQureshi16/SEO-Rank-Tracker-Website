@@ -81,7 +81,7 @@ export const analyzeKeywordRanking = async (keyword, domain, competitorsList) =>
 
     return response.text;
   } catch (error) {
-    console.error("Error analyzing keyword ranking:", error);
+    console.error("Error analyzing keyword ranking:", error);  
     return "Optimization advice unavailable at this time.";
   }
 };
